@@ -21,14 +21,32 @@ const Leaderboard = () => {
 
   return (
     <div className="container mt-4">
-      <h2>Leaderboard</h2>
-      <ul className="list-group">
-        {leaderboard.map((entry, idx) => (
-          <li className="list-group-item" key={entry.id || idx}>
-            {JSON.stringify(entry)}
-          </li>
-        ))}
-      </ul>
+      <div className="card">
+        <div className="card-body">
+          <h2 className="card-title mb-4">Leaderboard</h2>
+          <div className="table-responsive">
+            <table className="table table-striped table-bordered">
+              <thead className="table-dark">
+                <tr>
+                  {leaderboard[0] && Object.keys(leaderboard[0]).map((key) => (
+                    <th key={key}>{key}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {leaderboard.map((entry, idx) => (
+                  <tr key={entry.id || idx}>
+                    {Object.values(entry).map((val, i) => (
+                      <td key={i}>{typeof val === 'object' ? JSON.stringify(val) : val}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {leaderboard.length === 0 && <div className="alert alert-info">No leaderboard data found.</div>}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
